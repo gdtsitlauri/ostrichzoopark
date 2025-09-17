@@ -260,7 +260,7 @@ body {
   flex-direction: column;
 }
 .main-header, .main-header * {
-  font-family: cursive, sans-serif !important;
+  font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif !important;
   animation: none !important; /* απενεργοποίηση breathing/microFloat στο header */
 }
 .logo-title h1 {
