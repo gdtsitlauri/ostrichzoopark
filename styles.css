@@ -235,7 +235,7 @@ a, a:visited, a:active {
 
 /* Εφαρμογή Amarante σε όλο το site εκτός header */
 body, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li, .content-section, .info-box, .footer-bar, .cat-box, .back-to-top {
-  font-family: cursive, sans-serif !important;
+  font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif !important;
 }
 /* === RESET === */
 * {
@@ -248,7 +248,7 @@ body, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li, .content-section, .info-box, .fo
 @import url('https://fonts.googleapis.com/css2?family=IM+FELL+Double+Pica&display=swap');
 
 body {
-  font-family: cursive, sans-serif;
+  font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
   background: #EDE8D0;
   color: #087848;
   /* Αφαιρέθηκε το τεχνητό min-height που δημιουργούσε κενό μετά το footer */
