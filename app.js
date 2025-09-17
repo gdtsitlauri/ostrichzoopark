@@ -1,5 +1,26 @@
-// === HERO IMAGE SLIDER FOR HOME ===
+// === DYNAMIC FONT LOADING DELAY ===
 document.addEventListener("DOMContentLoaded", () => {
+  document.body.classList.add('font-loading');
+  let fontLoaded = false;
+  function removeFontLoading() {
+    if (!fontLoaded) {
+      document.body.classList.remove('font-loading');
+      fontLoaded = true;
+    }
+  }
+  if (document.fonts && document.fonts.load) {
+    document.fonts.load('1em ComicSansCustom').then(function() {
+      setTimeout(removeFontLoading, 80); // μικρή δυναμική καθυστέρηση για ομαλή μετάβαση
+    });
+    // Fallback: remove after 2.5s if font doesn't load
+    setTimeout(removeFontLoading, 2500);
+  } else {
+    window.addEventListener('load', function() {
+      setTimeout(removeFontLoading, 200);
+    });
+  }
+
+  // === HERO IMAGE SLIDER FOR HOME ===
   const heroSlider = document.querySelector('.hero-img-slider');
   if (heroSlider) {
     const heroImages = heroSlider.querySelectorAll('.hero-img');
