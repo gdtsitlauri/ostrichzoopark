@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'ComicSansCustom';
+  src: url('fonts/ComicSansMS.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 /* === SMOOTH HOVER ANIMATION FOR SLIDER IMAGES === */
 .slider .slides img {
   transition: transform 0.45s cubic-bezier(.25,.46,.45,.94), box-shadow 0.45s ease;
@@ -235,7 +241,7 @@ a, a:visited, a:active {
 
 /* Εφαρμογή Amarante σε όλο το site εκτός header */
 body, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li, .content-section, .info-box, .footer-bar, .cat-box, .back-to-top {
-  font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif !important;
+  font-family: 'ComicSansCustom', cursive, sans-serif !important;
 }
 /* === RESET === */
 * {
@@ -248,7 +254,7 @@ body, h1, h2, h3, h4, h5, h6, p, a, ul, ol, li, .content-section, .info-box, .fo
 @import url('https://fonts.googleapis.com/css2?family=IM+FELL+Double+Pica&display=swap');
 
 body {
-  font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
+  font-family: 'ComicSansCustom', cursive, sans-serif;
   background: #EDE8D0;
   color: #087848;
   /* Αφαιρέθηκε το τεχνητό min-height που δημιουργούσε κενό μετά το footer */
@@ -260,11 +266,11 @@ body {
   flex-direction: column;
 }
 .main-header, .main-header * {
-  font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif !important;
+  font-family: 'ComicSansCustom', cursive, sans-serif !important;
   animation: none !important; /* απενεργοποίηση breathing/microFloat στο header */
 }
 .logo-title h1 {
-  font-family: 'IM FELL Double Pica', serif !important;
+  font-family: 'ComicSansCustom', cursive, sans-serif !important;
 }
 
 /* === HEADER === */
