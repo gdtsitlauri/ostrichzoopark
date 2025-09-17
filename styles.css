@@ -133,6 +133,10 @@ img, .cat-box, .info-box, .logo-circle, .slider button, .back-to-top, .section-h
   box-shadow: none;
   filter: drop-shadow(var(--hover-shadow-primary)) drop-shadow(var(--hover-shadow-secondary));
 }
+
+.cat-box:hover {
+  cursor: pointer;
+}
 /* Προσθήκη hover κίνησης στα πλαίσια των εικόνων */
 .hero-img-container:hover, .slider:hover {
   /* Αφαιρέθηκε το hover lift από τα βέλη slider */
@@ -674,7 +678,7 @@ html[lang="el"] .top-menu li a { font-size: 1.20rem; line-height: 1.2; }
   border-radius: 15px;
   overflow: hidden;
   position: relative;
-  background: url('about.png') no-repeat center center/cover;
+  background: url('about.jpg') no-repeat center center/cover;
   min-height: 700px;                  /* 👈 του δίνει ύψος */
   display: flex;                      /* κεντράρει το overlay */
   align-items: center;                /* κατακόρυφο κέντρο */
