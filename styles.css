@@ -25,6 +25,9 @@ body.font-loading { visibility: hidden !important; }
 }
 /* === MOBILE SLIDER IMAGE ASPECT RATIO 3:4 === */
 @media (max-width: 768px) {
+  .slider .slides img[src="activities/2.jpg"] {
+    object-position: left center;
+  }
   .slider .slides img {
     width: 100%;
     aspect-ratio: 3 / 4;
