@@ -1,3 +1,4 @@
+body.font-loading { visibility: hidden !important; }
 @font-face {
   font-family: 'ComicSansCustom';
   src: url('fonts/ComicSansMS.ttf') format('truetype');

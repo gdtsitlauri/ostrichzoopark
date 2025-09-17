@@ -14,6 +14,20 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+  <script>
+    document.body.classList.add('font-loading');
+    if (document.fonts) {
+      document.fonts.load('1em ComicSansCustom').then(function() {
+        document.body.classList.remove('font-loading');
+      });
+    } else {
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          document.body.classList.remove('font-loading');
+        }, 200);
+      });
+    }
+  </script>
   <!-- HEADER FLEXBOX -->
   <header class="main-header lang-anim-target">
     <div class="header-container">
