@@ -1,3 +1,11 @@
+@media (max-width: 768px) {
+  .hero-img-slider .hero-img[src="1_1.jpg"] {
+    object-position: 30% center;
+  }
+  .hero-img-slider .hero-img[src="1_3.jpg"] {
+    object-position: 75% center;
+  }
+}
 .hero-img-container {
   position: relative;
   width: 100%;
