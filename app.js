@@ -62,15 +62,31 @@ document.querySelectorAll(".slider").forEach(slider => {
     img.style.zIndex = idx === 0 ? '2' : '0';
   });
 
+  function resetAutoSlide() {
+    clearInterval(autoSlideInterval);
+    autoSlideInterval = setInterval(() => {
+      showSlide(index + 1);
+    }, 5000);
+  }
   slider.querySelector(".prev").addEventListener("click", () => {
     showSlide(index - 1);
+    resetAutoSlide();
   });
   slider.querySelector(".next").addEventListener("click", () => {
     showSlide(index + 1);
+    resetAutoSlide();
   });
 
   // Εξαναγκασμένο fade-in στην πρώτη εικόνα όταν εμφανίζεται η κατηγορία
   showSlide(0, true);
+
+  // Αυτόματη εναλλαγή εικόνων κάθε 5 δευτερόλεπτα
+  let autoSlideInterval = setInterval(() => {
+    showSlide(index + 1);
+  }, 5000);
+
+  // Σταμάτα το interval όταν ο slider/section κρύβεται (προαιρετικά)
+  // Αν θέλεις να σταματά όταν αλλάζει κατηγορία, μπορείς να προσθέσεις observer ή event
 });
 
 // === PAGE NAVIGATION WITH FADE/ZOOM ANIMATION ===
