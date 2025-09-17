@@ -1,3 +1,77 @@
+// === HERO IMAGE SLIDER FOR HOME ===
+document.addEventListener("DOMContentLoaded", () => {
+  const heroSlider = document.querySelector('.hero-img-slider');
+  if (heroSlider) {
+    const heroImages = heroSlider.querySelectorAll('.hero-img');
+    let heroIndex = 0;
+    function showHeroSlide(i, force = false) {
+      let nextIndex;
+      if (i < 0) nextIndex = heroImages.length - 1;
+      else if (i >= heroImages.length) nextIndex = 0;
+      else nextIndex = i;
+      const looping = (heroIndex === heroImages.length - 1 && nextIndex === 0) || (heroIndex === 0 && nextIndex === heroImages.length - 1);
+      heroImages.forEach((img, idx) => {
+        img.classList.remove('slide-fade-in', 'slide-fade-out');
+        img.style.opacity = '0';
+        img.style.transition = 'none';
+        // Keep outgoing image above until fade-out completes
+        if (idx === heroIndex && !force && !looping) {
+          img.style.zIndex = '3';
+        } else {
+          img.style.zIndex = '0';
+        }
+      });
+      // skip fade-out animation if looping from last to first
+  const transitionDuration = 2200;
+  const transitionCurve = 'cubic-bezier(.33,.66,.4,1)';
+  const fadeOutDuration = 1200;
+  const fadeInDelay = 400;
+      if (!force && !looping) {
+    heroImages[heroIndex].classList.add('slide-fade-out');
+    heroImages[heroIndex].style.transition = `opacity ${fadeOutDuration}ms ${transitionCurve}`;
+    heroImages[heroIndex].style.opacity = '0';
+    heroImages[heroIndex].style.zIndex = '3';
+    heroImages[heroIndex].style.display = 'block'; // keep visible during fade-out
+    heroImages[heroIndex].style.transform = 'none'; // prevent any movement
+      }
+      setTimeout(() => {
+        heroImages[nextIndex].style.display = 'block';
+        setTimeout(() => {
+          heroImages[nextIndex].classList.add('slide-fade-in');
+          heroImages[nextIndex].style.transition = `opacity ${transitionDuration}ms ${transitionCurve}`;
+          heroImages[nextIndex].style.opacity = '1';
+          heroImages[nextIndex].style.zIndex = '2';
+          heroImages.forEach((img, idx) => {
+            if (idx !== nextIndex) img.style.display = (idx === heroIndex && !force && !looping) ? 'block' : 'none';
+          });
+          setTimeout(() => {
+            // hide the old image after fade-out completes and reset z-index
+            heroImages.forEach((img, idx) => {
+              if (idx !== nextIndex) {
+                img.style.display = 'none';
+                img.style.zIndex = '0';
+              }
+            });
+            heroIndex = nextIndex;
+          }, fadeOutDuration);
+        }, fadeInDelay);
+      }, (force || looping) ? 0 : fadeOutDuration);
+  // ...function ends here, no extra closing brace...
+    }
+    // Init: hide all except first
+    heroImages.forEach((img, idx) => {
+      img.style.opacity = idx === 0 ? '1' : '0';
+      img.style.transform = 'scale(1)';
+      img.style.display = idx === 0 ? 'block' : 'none';
+      img.style.transition = 'none';
+      img.style.zIndex = idx === 0 ? '2' : '0';
+    });
+    showHeroSlide(0, true);
+    let heroAutoSlideInterval = setInterval(() => {
+      showHeroSlide(heroIndex + 1);
+    }, 10000);
+  }
+});
 // Απενεργοποίηση browser scroll restoration + αναγκαστικό scroll top για να μην φαίνεται στιγμιαία το footer
 if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
@@ -308,18 +382,16 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 150); // δυναμική καθυστέρηση για να προλάβει το DOM
     }, 400);
   }
-// === CSS για fade/scale slider animation ===
+// === CSS για fade slider animation χωρίς scale ===
 const style = document.createElement('style');
 style.innerHTML = `
   .slide-fade-in {
     opacity: 1 !important;
-    transform: scale(1) !important;
-    transition: opacity 0.8s cubic-bezier(.25,.46,.45,.94), transform 0.8s cubic-bezier(.25,.46,.45,.94);
+    transition: opacity 2.2s cubic-bezier(.33,.66,.4,1);
   }
   .slide-fade-out {
     opacity: 0 !important;
-    transform: scale(0.97) !important;
-    transition: opacity 0.8s cubic-bezier(.25,.46,.45,.94), transform 0.8s cubic-bezier(.25,.46,.45,.94);
+    transition: opacity 1.2s cubic-bezier(.33,.66,.4,1);
   }
 `;
 document.head.appendChild(style);
