@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ostrichzoopark.com/sitemap.xml
