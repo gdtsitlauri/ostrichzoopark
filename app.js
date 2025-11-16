@@ -329,7 +329,15 @@ document.addEventListener("DOMContentLoaded", () => {
       eventsHeader: '<span class="green">Organize</span> <span class="dark">your</span> <span class="red">moments</span>',
       contactTitle: 'Contact Us',
       address: 'Episkopi, Heraklion Crete',
-      brandFooter: '© <span class="green">Ostrich</span> <span class="dark">ZooPark</span> & <span class="green">Tavern</span> <span class="red">"THEA"</span>'
+      brandFooter: '© <span class="green">Ostrich</span> <span class="dark">ZooPark</span> & <span class="green">Tavern</span> <span class="red">"THEA"</span>',
+      privacyLink: 'Privacy Policy',
+      privacyTitle: 'Privacy Policy',
+      privacyContent: `
+        <p>The website ostrichzoopark.com is purely informational and does not collect users’ personal data.</p>
+        <p>We do not use analytics, tracking, statistics or advertising cookies.<br>We do not use contact forms and we do not store visitor information.</p>
+        <p>The server may log technical details, such as IP address and visit time, only for security and proper operation purposes, with no further processing.</p>
+        <p>For any communication, you can email us at:<br><a href="mailto:farmalasithiotakes@yahoo.com">farmalasithiotakes@yahoo.com</a></p>
+      `
     },
     el: {
       menuHome: 'Αρχική', menuFarm: 'Φάρμα', menuTavern: 'Ταβέρνα', menuActivities: 'Δραστηριότητες', menuEvents: 'Εκδηλώσεις', menuContact: 'Επικοινωνία',
@@ -352,7 +360,15 @@ document.addEventListener("DOMContentLoaded", () => {
       eventsHeader: '<span class="green">Οργανώστε</span> <span class="dark">τις</span> <span class="red">στιγμές</span>',
       contactTitle: 'Επικοινωνία',
       address: 'Επισκοπή Πεδιάδος, Ηράκλειο Κρήτης',
-      brandFooter: '© <span class="green">Ostrich</span> <span class="dark">ZooPark</span> & <span class="green">Ταβέρνα</span> <span class="red">"ΘΕΑ"</span>'
+      brandFooter: '© <span class="green">Ostrich</span> <span class="dark">ZooPark</span> & <span class="green">Ταβέρνα</span> <span class="red">"ΘΕΑ"</span>',
+      privacyLink: 'Πολιτική Απορρήτου',
+      privacyTitle: 'Πολιτική Απορρήτου',
+      privacyContent: `
+        <p>Ο ιστότοπος ostrichzoopark.com είναι καθαρά ενημερωτικός και δεν συλλέγει προσωπικά δεδομένα χρηστών.</p>
+        <p>Δεν χρησιμοποιούμε cookies ανάλυσης, tracking, στατιστικών ή διαφήμισης.<br>Δεν χρησιμοποιούμε φόρμες επικοινωνίας και δεν αποθηκεύουμε πληροφορίες επισκεπτών.</p>
+        <p>Ο διακομιστής (server) ενδέχεται να καταγράφει τεχνικά στοιχεία, όπως IP και χρόνο επίσκεψης, μόνο για λόγους ασφαλείας και σωστής λειτουργίας, χωρίς να γίνεται περαιτέρω επεξεργασία.</p>
+        <p>Για οποιαδήποτε επικοινωνία, μπορείτε να μας στείλετε email στο:<br><a href="mailto:farmalasithiotakes@yahoo.com">farmalasithiotakes@yahoo.com</a></p>
+      `
     }
   };
 
@@ -444,6 +460,37 @@ document.head.appendChild(style);
       backToTop.addEventListener("click", e => {
         e.preventDefault();
         animateScrollTo(0, SCROLL_DURATION);
+      });
+    }
+
+    // === PRIVACY MODAL ===
+    const privacyLink = document.getElementById('privacy-link');
+    const privacyModal = document.getElementById('privacy-modal');
+    function openModal() {
+      if (!privacyModal) return;
+      privacyModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      const closeBtn = privacyModal.querySelector('.modal-close');
+      if (closeBtn) setTimeout(() => closeBtn.focus({ preventScroll: true }), 0);
+    }
+    function closeModal() {
+      if (!privacyModal) return;
+      privacyModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    if (privacyLink && privacyModal) {
+      privacyLink.addEventListener('click', (e) => { e.preventDefault(); openModal(); });
+      // Event delegation for any [data-close] inside the modal and overlay clicks
+      privacyModal.addEventListener('click', (e) => {
+        const isOverlay = e.target && e.target.classList && e.target.classList.contains('modal-overlay');
+        const wantsClose = e.target && (e.target.matches('[data-close]') || (e.target.closest && e.target.closest('[data-close]')));
+        if (isOverlay || wantsClose) {
+          e.preventDefault();
+          closeModal();
+        }
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && privacyModal.getAttribute('aria-hidden') === 'false') closeModal();
       });
     }
 });

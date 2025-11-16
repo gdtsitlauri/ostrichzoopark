@@ -499,7 +499,7 @@ html[lang="el"] .top-menu li a { font-size: 1.20rem; line-height: 1.2; }
 .thea-inline {
   font-size: 1.8rem;
   font-weight: normal;
-  margin-left: 0.5em;
+  margin-left: 0.18em; /* reduce extra left gap before "ΘΕΑ" */
 }
 
 /* RIGHT PHONE */
@@ -763,6 +763,49 @@ html[lang="el"] .top-menu li a { font-size: 1.20rem; line-height: 1.2; }
   text-decoration: underline;
 }
 
+/* Footer legal links */
+.legal-links {
+  margin-top: 1rem;
+}
+.legal-links a {
+  display: inline-block;
+  background: #f0f4f8;
+  border: 2px solid #e0e6ed;
+  color: #087848;
+  padding: .5rem .9rem;
+  border-radius: 14px;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: background .3s ease, box-shadow .3s ease, transform .3s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.legal-links a span { color: #087848; }
+.legal-links a:hover { background: #f0f4f8; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.12); }
+.legal-links a:hover, .legal-links a:hover span { color: #087848 !important; text-shadow: none; }
+.legal-links a .privacy-icon { margin-right: .45rem; color: red; vertical-align: middle; pointer-events: none; }
+.legal-links a:hover .privacy-icon { color: red; }
+
+/* Modal */
+.modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 10000; }
+.modal[aria-hidden="false"] { display: flex; }
+.modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.45); z-index: 1; }
+.modal-content { position: relative; background: #ffffff; color: #222; width: min(900px, 92vw); max-height: 85vh; overflow: auto; border-radius: 16px; padding: 2.0rem 1.2rem 1.4rem; box-shadow: 0 12px 40px rgba(0,0,0,0.25); border: 2px solid #e0e6ed; z-index: 2; pointer-events: auto; }
+.modal-content h3 { margin: 0 0 .6rem; font-size: 1.6rem; color: #087848; text-align: center; }
+.modal-body p { margin: .6rem 0; color: #333; font-size: 1.05rem; line-height: 1.6; }
+.modal-body a { color: #087848; text-decoration: underline; }
+.modal-close { position: absolute; top: .4rem; right: .6rem; background: transparent; border: none; width: 56px; height: 56px; border-radius: 0; font-size: 2.2rem; line-height: 1; color: #333; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: none; -webkit-tap-highlight-color: transparent; touch-action: manipulation; z-index: 3; }
+.modal-close .x-mark { display:block; transform: translateY(0); pointer-events:none; }
+.modal-close:hover { background: transparent; color: red; }
+
+@media (max-width: 768px) {
+  .modal-content { width: 94vw; padding: 1.2rem 1rem 1rem; padding-top: 2.8rem; }
+  .modal-content h3 { font-size: 1.35rem; }
+  .modal-body p { font-size: 1rem; }
+  .modal-close { width: 60px; height: 60px; font-size: 2.4rem; top: .5rem; right: .5rem; }
+  .modal-close .x-mark { transform: translateY(0); }
+}
+
 /* Απόκρυψη footer πριν ολοκλήρωση init ώστε να μη φαίνεται στο αρχικό flash */
 body:not(.app-ready) #contact.footer-bar { opacity:0; visibility:hidden; }
 body.app-ready #contact.footer-bar { opacity:1; visibility:visible; }
@@ -787,6 +830,29 @@ body.app-ready #contact.footer-bar { opacity:1; visibility:visible; }
   color: red;
   margin-right: 0.6rem;
   font-size: 2.2rem;
+}
+
+/* Keep email icon next to the email text, including on iPhone */
+.email-line {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 0.6rem;
+}
+.email-line a {
+  white-space: nowrap; /* keep email on one line */
+}
+
+/* Slightly smaller email text on narrow phones (e.g., iPhone widths) */
+@media (max-width: 480px) {
+  .email-line { font-size: 0.88rem; column-gap: 0.4rem; }
+  .email-line a { letter-spacing: -0.01em; }
+}
+
+/* Extra small devices */
+@media (max-width: 360px) {
+  .email-line { font-size: 0.80rem; column-gap: 0.35rem; }
+  .email-line a { letter-spacing: -0.012em; }
 }
 
 /* === RESPONSIVE === */
@@ -821,7 +887,7 @@ body.app-ready #contact.footer-bar { opacity:1; visibility:visible; }
     max-width: 100%;
   }
   .logo-circle { margin: 0 auto .25rem; }
-  .logo-title-text .thea-inline { font-size: inherit !important; margin-left: .35em; }
+  .logo-title-text .thea-inline { font-size: inherit !important; margin-left: .18em; }
   .right-side {
     position: static;
     left: auto; right: auto; top: auto; bottom: auto;
