@@ -709,7 +709,7 @@ html[lang="el"] .top-menu li a { font-size: 1.20rem; line-height: 1.2; }
 .about-overlay h2 {
   font-size: 2.2rem;
   margin-bottom: 0.5rem;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .about-overlay p {
@@ -760,7 +760,7 @@ html[lang="el"] .top-menu li a { font-size: 1.20rem; line-height: 1.2; }
   font-size: 2rem;
   margin-bottom: 2rem;
   color: #222;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 /* Footer legal links */
