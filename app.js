@@ -336,7 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p>The website ostrichzoopark.com is purely informational and does not collect users’ personal data.</p>
         <p>We do not use analytics, tracking, statistics or advertising cookies.<br>We do not use contact forms and we do not store visitor information.</p>
         <p>The server may log technical details, such as IP address and visit time, only for security and proper operation purposes, with no further processing.</p>
-        <p>For any communication, you can email us at:<br><a href="mailto:farmalasithiotakes@yahoo.com">farmalasithiotakes@yahoo.com</a></p>
+        <p>For any communication, you can email us at:<br><a href="mailto:farmalasithiotakis@yahoo.gr">farmalasithiotakis@yahoo.gr</a></p>
       `
     },
     el: {
@@ -367,7 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p>Ο ιστότοπος ostrichzoopark.com είναι καθαρά ενημερωτικός και δεν συλλέγει προσωπικά δεδομένα χρηστών.</p>
         <p>Δεν χρησιμοποιούμε cookies ανάλυσης, tracking, στατιστικών ή διαφήμισης.<br>Δεν χρησιμοποιούμε φόρμες επικοινωνίας και δεν αποθηκεύουμε πληροφορίες επισκεπτών.</p>
         <p>Ο διακομιστής (server) ενδέχεται να καταγράφει τεχνικά στοιχεία, όπως IP και χρόνο επίσκεψης, μόνο για λόγους ασφαλείας και σωστής λειτουργίας, χωρίς να γίνεται περαιτέρω επεξεργασία.</p>
-        <p>Για οποιαδήποτε επικοινωνία, μπορείτε να μας στείλετε email στο:<br><a href="mailto:farmalasithiotakes@yahoo.com">farmalasithiotakes@yahoo.com</a></p>
+        <p>Για οποιαδήποτε επικοινωνία, μπορείτε να μας στείλετε email στο:<br><a href="mailto:farmalasithiotakis@yahoo.gr">farmalasithiotakis@yahoo.gr</a></p>
       `
     }
   };
