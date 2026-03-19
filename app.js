@@ -375,158 +375,218 @@ document.addEventListener("DOMContentLoaded", () => {
     resetAutoSlide();
   });
 
-  // =========================
-  // PAGE NAVIGATION
-  // =========================
-  const menuLinks = document.querySelectorAll(".top-menu a");
-  const catBoxes = document.querySelectorAll(".cat-box");
-  const sections = Array.from(document.querySelectorAll(".content-section"));
-  const home = document.getElementById("home");
-  const footer = document.querySelector("footer");
+// =========================
+// PAGE NAVIGATION
+// =========================
+const menuLinks = document.querySelectorAll(".top-menu a");
+const catBoxes = document.querySelectorAll(".cat-box");
+const sections = Array.from(document.querySelectorAll(".content-section"));
+const home = document.getElementById("home");
+const footer = document.querySelector("footer");
+const contentWrapper = document.querySelector(".content-wrapper");
 
-  const sectionOrder = ["home", "farm", "tavern", "activities", "events"];
+const sectionOrder = ["home", "farm", "tavern", "activities", "events"];
 
-  let currentId = "home";
-  let isSectionTransitioning = false;
-  let sectionTransitionTimeout = null;
+let currentId = "home";
+let isSectionTransitioning = false;
+let sectionTransitionTimeout = null;
 
-  function clearSectionTransitionTimeouts() {
-    clearTimeout(sectionTransitionTimeout);
+function clearSectionTransitionTimeouts() {
+  clearTimeout(sectionTransitionTimeout);
+}
+
+function setActiveMenuLink(targetId) {
+  menuLinks.forEach(link => link.classList.remove("active"));
+  const activeLink = Array.from(menuLinks).find(
+    link => link.dataset.target === targetId
+  );
+  if (activeLink) activeLink.classList.add("active");
+}
+
+function getSectionEl(id) {
+  return id === "home" ? home : document.getElementById(id);
+}
+
+function cleanupSectionClasses(section) {
+  if (!section) return;
+
+  section.classList.remove(
+    "fade-out",
+    "section-enter-from-right",
+    "section-enter-from-left",
+    "section-exit-to-left",
+    "section-exit-to-right"
+  );
+}
+
+function isInsideContentWrapper(section) {
+  return !!(
+    section &&
+    contentWrapper &&
+    section.closest(".content-wrapper") === contentWrapper
+  );
+}
+
+function pinSection(section) {
+  if (!section) return;
+
+  if (isInsideContentWrapper(section)) {
+    section.style.position = "absolute";
+    section.style.top = "0";
+    section.style.left = "0";
+    section.style.width = "100%";
+  }
+}
+
+function unpinSection(section) {
+  if (!section) return;
+
+  section.style.position = "";
+  section.style.top = "";
+  section.style.left = "";
+  section.style.width = "";
+}
+
+function lockContentWrapperHeight(currentSection, newSection) {
+  if (!contentWrapper) return;
+
+  const heights = [];
+
+  if (isInsideContentWrapper(currentSection)) {
+    heights.push(currentSection.offsetHeight);
   }
 
-  function setActiveMenuLink(targetId) {
-    menuLinks.forEach(link => link.classList.remove("active"));
-    const activeLink = Array.from(menuLinks).find(
-      link => link.dataset.target === targetId
-    );
-    if (activeLink) activeLink.classList.add("active");
+  if (isInsideContentWrapper(newSection)) {
+    heights.push(newSection.offsetHeight);
   }
 
-  function getSectionEl(id) {
-    return id === "home" ? home : document.getElementById(id);
+  if (heights.length) {
+    contentWrapper.style.height = `${Math.max(...heights)}px`;
+  }
+}
+
+function unlockContentWrapperHeight() {
+  if (!contentWrapper) return;
+  contentWrapper.style.height = "";
+}
+
+function goToSection(targetId) {
+  if (!targetId || isSectionTransitioning) return;
+
+  const newSection = getSectionEl(targetId);
+  const currentSection = getSectionEl(currentId);
+
+  if (!newSection || !currentSection) return;
+
+  setActiveMenuLink(targetId);
+
+  if (targetId === currentId) {
+    animateScrollTo(0, SCROLL_DURATION);
+    return;
   }
 
-  function cleanupSectionClasses(section) {
-    if (!section) return;
+  clearSectionTransitionTimeouts();
+  isSectionTransitioning = true;
 
-    section.classList.remove(
-      "fade-out",
-      "section-enter-from-right",
-      "section-enter-from-left",
-      "section-exit-to-left",
-      "section-exit-to-right"
-    );
-  }
+  const currentIndex = sectionOrder.indexOf(currentId);
+  const targetIndex = sectionOrder.indexOf(targetId);
+  const goingBackward =
+    currentIndex !== -1 && targetIndex !== -1 && targetIndex < currentIndex;
 
-  function goToSection(targetId) {
-    if (!targetId || isSectionTransitioning) return;
+  const enterClass = goingBackward
+    ? "section-enter-from-left"
+    : "section-enter-from-right";
 
-    const newSection = getSectionEl(targetId);
-    const currentSection = getSectionEl(currentId);
+  const exitClass = goingBackward
+    ? "section-exit-to-right"
+    : "section-exit-to-left";
 
-    if (!newSection || !currentSection) return;
+  [home, ...sections].forEach(section => {
+    cleanupSectionClasses(section);
+  });
 
-    setActiveMenuLink(targetId);
+  newSection.style.display = "block";
+  newSection.classList.remove("active");
+  newSection.classList.add(enterClass);
 
-    if (targetId === currentId) {
-      animateScrollTo(0, SCROLL_DURATION);
+  currentSection.style.display = "block";
+
+  lockContentWrapperHeight(currentSection, newSection);
+
+  pinSection(currentSection);
+  pinSection(newSection);
+
+  animateScrollTo(0, SCROLL_DURATION);
+
+  void newSection.offsetWidth;
+
+  requestAnimationFrame(() => {
+    currentSection.classList.remove("active");
+    currentSection.classList.add(exitClass);
+
+    newSection.classList.add("active");
+    newSection.classList.remove(enterClass);
+
+    sectionTransitionTimeout = setTimeout(() => {
+      currentSection.style.display = "none";
+      cleanupSectionClasses(currentSection);
+      cleanupSectionClasses(newSection);
+
+      unpinSection(currentSection);
+      unpinSection(newSection);
+      unlockContentWrapperHeight();
+
+      newSection.classList.add("active");
+      currentId = targetId;
+      isSectionTransitioning = false;
+    }, SECTION_TRANSITION_DURATION);
+  });
+}
+
+menuLinks.forEach(link => {
+  link.addEventListener("click", e => {
+    e.preventDefault();
+    const targetId = link.dataset.target;
+
+    if (targetId === "contact") {
+      const footerEl = document.getElementById("contact") || footer;
+      if (footerEl) {
+        const targetY =
+          footerEl.getBoundingClientRect().top + window.pageYOffset;
+        animateScrollTo(targetY, SCROLL_DURATION);
+      }
       return;
     }
 
-    clearSectionTransitionTimeouts();
-    isSectionTransitioning = true;
-
-    const currentIndex = sectionOrder.indexOf(currentId);
-    const targetIndex = sectionOrder.indexOf(targetId);
-    const goingBackward =
-      currentIndex !== -1 && targetIndex !== -1 && targetIndex < currentIndex;
-
-    const enterClass = goingBackward
-      ? "section-enter-from-left"
-      : "section-enter-from-right";
-
-    const exitClass = goingBackward
-      ? "section-exit-to-right"
-      : "section-exit-to-left";
-
-    [home, ...sections].forEach(section => {
-      cleanupSectionClasses(section);
-    });
-
-    newSection.style.display = "block";
-    newSection.classList.remove("active");
-    newSection.classList.add(enterClass);
-
-    currentSection.style.display = "block";
-
-    animateScrollTo(0, SCROLL_DURATION);
-
-    // force reflow
-    void newSection.offsetWidth;
-
-    requestAnimationFrame(() => {
-      currentSection.classList.remove("active");
-      currentSection.classList.add(exitClass);
-
-      newSection.classList.add("active");
-      newSection.classList.remove(enterClass);
-
-      sectionTransitionTimeout = setTimeout(() => {
-        currentSection.style.display = "none";
-        cleanupSectionClasses(currentSection);
-        cleanupSectionClasses(newSection);
-
-        newSection.classList.add("active");
-        currentId = targetId;
-        isSectionTransitioning = false;
-      }, SECTION_TRANSITION_DURATION);
-    });
-  }
-
-  menuLinks.forEach(link => {
-    link.addEventListener("click", e => {
-      e.preventDefault();
-      const targetId = link.dataset.target;
-
-      if (targetId === "contact") {
-        const footerEl = document.getElementById("contact") || footer;
-        if (footerEl) {
-          const targetY =
-            footerEl.getBoundingClientRect().top + window.pageYOffset;
-          animateScrollTo(targetY, SCROLL_DURATION);
-        }
-        return;
-      }
-
-      goToSection(targetId);
-    });
+    goToSection(targetId);
   });
+});
 
-  catBoxes.forEach(box => {
-    box.addEventListener("click", () => {
-      const targetId = box.dataset.target;
-      goToSection(targetId);
-    });
+catBoxes.forEach(box => {
+  box.addEventListener("click", () => {
+    const targetId = box.dataset.target;
+    goToSection(targetId);
   });
+});
 
-  sections.forEach(section => {
-    section.classList.remove("active", "fade-out");
-    cleanupSectionClasses(section);
-    section.style.display = "none";
+sections.forEach(section => {
+  section.classList.remove("active", "fade-out");
+  cleanupSectionClasses(section);
+  section.style.display = "none";
+});
+
+if (home) {
+  cleanupSectionClasses(home);
+  home.style.display = "block";
+
+  requestAnimationFrame(() => {
+    home.classList.add("active");
+    currentId = "home";
   });
+}
 
-  if (home) {
-    cleanupSectionClasses(home);
-    home.style.display = "block";
-
-    requestAnimationFrame(() => {
-      home.classList.add("active");
-      currentId = "home";
-    });
-  }
-
-  setActiveMenuLink("home");
-  document.body.classList.add("app-ready");
+setActiveMenuLink("home");
+document.body.classList.add("app-ready");
 
   // =========================
   // I18N

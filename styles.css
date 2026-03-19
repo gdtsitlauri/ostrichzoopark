@@ -96,7 +96,6 @@ body :where(h1, h2, h3, h4, h5, h6, p, a, li, span, strong, em, small, label):ho
 }
 
 /* === GLOBAL BOX/BUTTON HOVER === */
-/* Το logo έχει βγει έξω από τα global image effects */
 .cat-box,
 .info-box,
 .slider button,
@@ -192,7 +191,6 @@ body :where(h1, h2, h3, h4, h5, h6, p, a, li, span, strong, em, small, label):ho
 }
 
 /* Greek tighter menu */
-
 html[lang="el"] .top-menu ul {
   gap: .25rem;
 }
@@ -430,6 +428,7 @@ html[lang="el"] .top-menu li a {
   display: block;
   z-index: 1;
 }
+
 #home.fade-out {
   opacity: 0;
   transform: scale(.95);
@@ -540,22 +539,30 @@ html[lang="el"] .top-menu li a {
 }
 
 .slides {
-  display: flex;
-  transition: transform .6s ease;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 10 / 7;
+  display: block;
+  overflow: hidden;
 }
 
 .slides img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  max-height: 700px;
+  height: 100%;
+  max-height: none;
   object-fit: cover;
   border-radius: 20px;
-  flex-shrink: 0;
-  display: block;
-  margin: 0 auto;
+  display: none;
+  opacity: 0;
+  margin: 0;
   animation: none !important;
-  transition: transform .45s cubic-bezier(.25, .46, .45, .94), box-shadow .45s ease;
+  transition:
+    opacity .8s cubic-bezier(.25, .46, .45, .94),
+    transform .8s cubic-bezier(.25, .46, .45, .94),
+    box-shadow .45s ease;
 }
-
 
 .slider button {
   position: absolute;
@@ -608,6 +615,7 @@ html[lang="el"] .top-menu li a {
   position: relative;
   overflow: hidden;
   margin-bottom: 2rem;
+  transition: height .65s cubic-bezier(.33, .66, .4, 1);
 }
 
 .content-section {
@@ -620,6 +628,7 @@ html[lang="el"] .top-menu li a {
   padding: 2rem 1rem;
   display: none;
   min-height: 400px;
+  width: 100%;
   will-change: opacity, transform;
 }
 
@@ -634,7 +643,6 @@ html[lang="el"] .top-menu li a {
   opacity: 0;
   transform: scale(.95);
 }
-
 
 /* === INFO BOX === */
 .info-box {
@@ -1135,15 +1143,18 @@ body.app-ready #contact.footer-bar {
     transform-origin: center center;
   }
 
+  .slides {
+    aspect-ratio: 3 / 4;
+  }
+
   .slider .slides img {
     width: 100%;
-    aspect-ratio: 3 / 4;
-    height: auto;
-    object-fit: cover;
+    height: 100%;
     max-height: none;
+    object-fit: cover;
     border-radius: 20px;
-    display: block;
-    margin: 0 auto;
+    display: none;
+    margin: 0;
   }
 
   .slider .slides img[src="activities/2.jpg"] {
