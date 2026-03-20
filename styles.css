@@ -1222,6 +1222,12 @@ body.app-ready #contact.footer-bar {
     padding: 1.4rem 1.2rem .8rem;
   }
 
+    .back-to-top {
+    font-size: 1rem;
+    white-space: nowrap;
+    padding: .9rem 1.2rem;
+  }
+
   .contact-grid {
     flex-direction: column;
     align-items: stretch;
@@ -1274,6 +1280,8 @@ body.app-ready #contact.footer-bar {
   .modal-close .x-mark {
     transform: translateY(0);
   }
+
+  
 }
 
 /* === SMALL PHONES === */
