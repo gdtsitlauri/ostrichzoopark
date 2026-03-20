@@ -999,7 +999,7 @@ body.app-ready #contact.footer-bar {
     white-space: normal;
     word-break: break-word;
     overflow-wrap: anywhere;
-    font-size: 1.65rem;
+    font-size: 2rem !important;
     line-height: 1.25;
     text-align: center;
     max-width: 100%;
@@ -1076,7 +1076,8 @@ body.app-ready #contact.footer-bar {
     transform: translateY(0);
   }
 
-  .top-menu li a.active {
+  .top-menu li a.active,
+  html[lang="el"] .top-menu li a.active {
     background: #087848;
     color: #fff !important;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.22);
